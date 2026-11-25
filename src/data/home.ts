@@ -29,8 +29,7 @@ export const heroCards = [
     href: twitchUrl, // set in src/data/site.ts
     badge: 'Live', // small "● LIVE" sticker on the photo
     photo: 'home-live.jpg',
-    standIn: 'the live build stream',
-    photoLabel: 'Live build stream',
+    photoLabel: 'Two team members in Talosaur shirts working together at a lab bench',
   },
 ];
 
