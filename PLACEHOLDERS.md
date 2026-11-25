@@ -23,7 +23,6 @@ section explains sizes.
 |---|---|---|---|
 | The whole team | Home, Featured "Who we are" card | `home-team.jpg` | 16:9 |
 | Team members at work | Home, Featured "Open positions" card | `home-positions.jpg` | 16:9 |
-| Turtle mid-build (hull closed) | Home, Featured "Our build log" card | `home-build-log.jpg` | 16:9 |
 | The live build stream setup | Home, "Talosaur Live" card | `home-live.jpg` | 16:9 |
 | A team portrait | Home, "Meet the team" card | `home-meet-the-team.jpg` | 16:9 |
 | Nice to have: a retake of Fernando's portrait (the lead photo, now a selfie) against a plain wall, and larger originals of Sam's, Alvin's, Nicholas's and Omeed's (they came in at 800 px) | Who we are | `team/fernando-guzman.jpg` and the others' names in `src/data/team.ts` | Fernando 4:5 |

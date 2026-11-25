@@ -58,8 +58,7 @@ export const featuredCards = [
     text: 'Updates, photos and videos from every stage.',
     href: '/news',
     photo: 'home-build-log.jpg',
-    standIn: 'Turtle mid-build',
-    photoLabel: 'Build in progress',
+    photoLabel: 'A part for Turtle being drilled on a CNC machine, with fresh chips around the holes',
   },
 ];
 

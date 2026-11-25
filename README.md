@@ -93,7 +93,7 @@ All photos live in `public/images/`. To swap one, overwrite the file and keep th
 | `home-live.jpg` | Talosaur Live | A lathe at work, with a "● LIVE" badge on top (links to Twitch; the badge is the `badge` line in `src/data/home.ts`) |
 | `home-team.jpg` | Who we are | A school of fish |
 | `home-positions.jpg` | Open positions | Pipette and well plate |
-| `home-build-log.jpg` | Our build log | Hands at a microscope |
+| `home-build-log.jpg` | Our build log | A part for Turtle being drilled on the CNC machine (a still from the team's machining video, 3:22 in; the video is only 568 × 320, so a sharper original or photo would look better) |
 | `home-twilight-zone.jpg` | The twilight zone | Sea nettle jellyfish |
 | `home-meet-the-team.jpg` | Meet the team | Crew and rover on a research ship deck (NOAA) |
 | `home-get-in-touch.jpg` | Get in touch | A ship offshore |
