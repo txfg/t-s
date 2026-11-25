@@ -15,6 +15,8 @@ people = {
   'nicholas-khu':    ('nicholas.png', 3/4,  70,  300, 395),
   'dominick-chu':    ('dominick.jpg', 1/1, 140, 1000, 650),
   'alvin-zheng':     ('alvin.png',    5/4, 120,  410, 395),
+  # a concert photo: the frame is shifted right of his face so the violin stays in
+  'omeed-tafreshi':  ('omeed.png',    4/5, 120,  370, 430),
 }
 for name, (f, ratio, top, chin, cx) in people.items():
     im = ImageOps.exif_transpose(Image.open(src + f)).convert('RGB')

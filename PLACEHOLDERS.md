@@ -9,7 +9,6 @@ section explains sizes.
 |---|---|---|
 | Instagram and YouTube links | Footer, "Connect with us" (plain text until filled in) | `src/data/site.ts` (`socialLinks`) |
 | `[Major, year]` (all 7 people) | Who we are | `src/data/team.ts` |
-| Omeed Tafreshi's photo (his initials show until it is added; the other six portraits are in) | Who we are | `public/images/team/omeed-tafreshi.jpg` |
 | Team LinkedIn links (optional, hidden until filled in) | Who we are | `src/data/team.ts` (`linkedin`) |
 | `[Photographer and source for these four photos.]` (zoanthids, porcelain crab, soft coral, pygmy seahorse headers) | Image credits page | `src/pages/image-credits.astro` |
 | `[photographer and source]` for the brain coral photo (The Problem, Habitat) | Image credits page | `src/pages/image-credits.astro` |
@@ -27,7 +26,7 @@ section explains sizes.
 | Turtle mid-build (hull closed) | Home, Featured "Our build log" card | `home-build-log.jpg` | 16:9 |
 | The live build stream setup | Home, "Talosaur Live" card | `home-live.jpg` | 16:9 |
 | A team portrait | Home, "Meet the team" card | `home-meet-the-team.jpg` | 16:9 |
-| Omeed's portrait (initials show until then). Nice to have: a retake of Fernando's (the lead photo, now a selfie) against a plain wall, and larger originals of Sam's, Alvin's and Nicholas's (they came in at 800 px) | Who we are | `team/omeed-tafreshi.jpg` (and the same names for the retakes) | Omeed 4:5, Fernando 4:5 |
+| Nice to have: a retake of Fernando's portrait (the lead photo, now a selfie) against a plain wall, and larger originals of Sam's, Alvin's, Nicholas's and Omeed's (they came in at 800 px) | Who we are | `team/fernando-guzman.jpg` and the others' names in `src/data/team.ts` | Fernando 4:5 |
 | A pool test, Lake Bryan, Lake Travis, Galveston (the Offshore stop has a NOAA reef photo) | News, "Where we test" (small photo beside each stop) | `sections/test-pool.jpg`, `test-lake-bryan.jpg`, `test-lake-travis.jpg`, `test-galveston.jpg` | 4:3 |
 | The team at a build day | Positions, "Life on the team" | `sections/team-build.jpg` | 16:10 |
 | Hands on a part (optional: adds the small framed photo) | Positions, "Life on the team" | `sections/team-lab.jpg` | 1:1 |
