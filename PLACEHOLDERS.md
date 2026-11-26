@@ -25,7 +25,6 @@ section explains sizes.
 | A team portrait | Home, "Meet the team" card | `home-meet-the-team.jpg` | 16:9 |
 | Nice to have: a retake of Fernando's portrait (the lead photo, now a selfie) against a plain wall, and larger originals of Sam's, Alvin's, Nicholas's and Omeed's (they came in at 800 px) | Who we are | `team/fernando-guzman.jpg` and the others' names in `src/data/team.ts` | Fernando 4:5 |
 | A pool test, Lake Bryan, Lake Travis, Galveston (the Offshore stop has a NOAA reef photo) | News, "Where we test" (small photo beside each stop) | `sections/test-pool.jpg`, `test-lake-bryan.jpg`, `test-lake-travis.jpg`, `test-galveston.jpg` | 4:3 |
-| The team at a build day | Positions, "Life on the team" | `sections/team-build.jpg` | 16:10 |
 | Hands on a part (optional: adds the small framed photo) | Positions, "Life on the team" | `sections/team-lab.jpg` | 1:1 |
 | Turtle in the pool | Donate, "Where it goes" Testing card | `sections/support-testing.jpg` | 4:3 |
 | Turtle on the bench, Turtle in the pool or a lake, and the Galveston trip (each replaces a stock stand-in: a mill, sunlit water, a boat wake) | News, "Where we are" pill | `sections/phase-build.jpg`, `phase-test.jpg`, `phase-field.jpg` | 4:3, subject in the middle |
