@@ -310,7 +310,8 @@ You don't upload anything by hand. Every push to the `main` branch publishes the
 | Git repository | `txfg/t-s`, production branch `main` |
 | Build command | `npm run build` |
 | Deploy command | `npx wrangler deploy` |
-| Build variable | `NODE_VERSION` = `24` (the site needs Node 22.23.4 or newer) |
+
+**Node version:** the `.node-version` file (it just says `24`) tells Cloudflare which Node.js to build with. The site needs Node 22.23.4 or newer.
 
 **`wrangler.jsonc`** (in the project folder) tells Cloudflare this is a static site and to serve the `dist/` folder. **Don't delete it.** Without it, Cloudflare tries to "configure" the project itself on every build and adds an Astro add-on that breaks the photo checks: every photo then shows a "photo to come" panel and the Home video shows its placeholder tag. The `name` in it must match the project's name in Cloudflare (`t-s`).
 
