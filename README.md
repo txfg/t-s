@@ -76,7 +76,7 @@ Open `src/data/positions.ts`. Each role is one `{ ... }` block with a title, "Wh
 
 ## Applications (Airtable)
 
-Every **Apply** button on the site goes to the Apply page (`/apply`, made by `src/pages/apply.astro`). It shows the list of roles on the left and the application form on the right. The form lives in Airtable and is shown inside the page in an *iframe* (a window onto another website). A role's own Apply button opens `/apply?role=...`, and the page passes that role to Airtable so it is already selected. Clicking a role on the Apply page does the same without reloading.
+Every **Apply** button on the Positions page opens the application form in Airtable, in a new tab. A role's own Apply button adds the role to the form's address (`?prefill_Role=...`), so that role is already selected when the form opens.
 
 - **Where applications go:** the **Talosaur Applications** base in Airtable, table **Applications**. Each application is one row, with the time it came in (**Submitted**).
 - **Reviewing:** use the **Status** column (New, Reviewing, Interview, Accepted, Not a fit) and **Team notes**. Neither is on the form, so applicants never see them. To get an email for each new application, in Airtable open **Automations**, choose the trigger "When a form is submitted" and the action "Send email".
@@ -87,6 +87,8 @@ Every **Apply** button on the site goes to the Apply page (`/apply`, made by `sr
   - **Position 2: title** and **what you did** show only if *Position 1: title* is not empty; **Position 3** the same, based on *Position 2: title*. This is how "add another position" works.
   Press **Publish** after changing them.
 - **The form's address** is in `airtableForm` in `src/data/positions.ts` (two IDs copied from the form's link). Only change it if you build a brand new form.
+- **Who can fill it in:** in the form's share settings, keep it open to *anyone with the link*, so applicants don't need an Airtable account.
+- **Old address:** the site briefly had an Apply page at `/apply`; `public/_redirects` sends that address to Positions.
 - **Privacy:** the Privacy page says applications are stored by Airtable. Update it if that ever changes.
 
 ## Add or swap a photo
