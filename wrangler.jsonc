@@ -1,0 +1,20 @@
+// Cloudflare settings for the live site (https://talosaur.com).
+// The site is fully static: Cloudflare runs `npm run build` (set in the Cloudflare dashboard,
+// Settings → Build) and then uploads the finished dist/ folder as plain files. No Worker code runs.
+//
+// Keep this file. Without it, Cloudflare "automatically configures" the project on every build by
+// adding the Astro Cloudflare adapter, which builds the pages in a way that can't see the files in
+// public/. Then every photo shows a "photo to come" panel and the Home video shows its placeholder tag.
+{
+  // Must match the Worker's name in the Cloudflare dashboard.
+  "name": "t-s",
+  "compatibility_date": "2026-11-26",
+  "assets": {
+    "directory": "./dist",
+    // Unknown addresses show the site's own 404 page (src/pages/404.astro).
+    "not_found_handling": "404-page"
+  },
+  // Lets Cloudflare build a preview copy of the site for each pull request
+  // (its `npx wrangler preview` step needs this block, even empty).
+  "previews": {}
+}

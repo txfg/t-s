@@ -50,7 +50,7 @@ npm run check    # looks for mistakes in the code (typos in data files, missing 
 | Page wrapper (head, header, footer) used by every page | `src/layouts/BaseLayout.astro` |
 | Site address (`site`) | `astro.config.mjs` |
 | Helper that every internal link and image path goes through | `src/lib/url.ts` |
-| Automatic deploy to GitHub Pages | `.github/workflows/deploy.yml` |
+| Cloudflare hosting settings (keep this file) | `wrangler.jsonc` |
 | Pages | `src/pages/` (one file per page) |
 
 ## Common edits
@@ -289,45 +289,41 @@ ffmpeg -ss 25.5 -i original.mov -frames:v 1 -vf "scale=1920:-2" -q:v 3 hero-post
 
 ## Deploy (put the site online)
 
-The site is hosted for free on **GitHub Pages** at the team's own domain, **https://talosaur.com/** (the domain is managed in Cloudflare). The old address, https://tafreshio.github.io/talosaur-site/, redirects there.
+The site is hosted for free on **Cloudflare** (Workers static assets) at the team's own domain, **https://talosaur.com/**. The code lives on GitHub in **txfg/t-s**.
 
 ### How deploys work
 
 You don't upload anything by hand. Every push to the `main` branch publishes the site:
 
 1. You push to `main` on GitHub.
-2. GitHub Actions runs the workflow in `.github/workflows/deploy.yml` (copied from [Astro's official GitHub Pages guide](https://docs.astro.build/en/guides/deploy/github/)). It installs the packages, runs `npm run build`, and uploads the finished `dist/` folder.
-3. A second step publishes that upload to GitHub Pages. The live site updates about a minute after you push.
+2. Cloudflare notices the push, installs the packages, runs `npm run build`, and uploads the finished `dist/` folder as plain files.
+3. The live site updates about a minute after you push.
 
-**Watch a deploy:** open the repository on GitHub and click the **Actions** tab. A green check means it's live; a red X means the build failed and the old version of the site stays up. Click the red run to see the error. You can also re-run the deploy from there with **Run workflow**.
+**Watch a deploy:** in the Cloudflare dashboard, open **Workers & Pages → t-s → Deployments** (or the build history under **Builds**). If a build fails, the old version of the site stays up; click the failed build to read the error. GitHub also shows a small check or X next to each commit.
 
-**Before you push**, run `npm run build` (and `npm run preview` to click around). If it fails on your computer, it will fail on GitHub too.
+**Before you push**, run `npm run build` (and `npm run preview` to click around). If it fails on your computer, it will fail on Cloudflare too.
 
-**One-time setting (already done):** in the repository's **Settings → Pages**, **Source** is set to **GitHub Actions**. If deploys ever stop appearing, check that first.
+**Settings in the Cloudflare dashboard (already done; check these first if deploys break):** under **Workers & Pages → t-s → Settings → Build**:
+
+| Setting | Value |
+|---|---|
+| Git repository | `txfg/t-s`, production branch `main` |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+
+**Node version:** the `.node-version` file (it just says `24`) tells Cloudflare which Node.js to build with. The site needs Node 22.23.4 or newer.
+
+**`wrangler.jsonc`** (in the project folder) tells Cloudflare this is a static site and to serve the `dist/` folder. **Don't delete it.** Without it, Cloudflare tries to "configure" the project itself on every build and adds an Astro add-on that breaks the photo checks: every photo then shows a "photo to come" panel and the Home video shows its placeholder tag. The `name` in it must match the project's name in Cloudflare (`t-s`).
 
 ### The domain (talosaur.com)
 
-The domain is managed in **Cloudflare**; the site itself is still built and hosted by GitHub Pages. Three things connect them:
+The domain is managed in the same **Cloudflare** account. It is attached to the site under **Workers & Pages → t-s → Settings → Domains & Routes** as a **Custom domain** (`talosaur.com`, and `www.talosaur.com`). Cloudflare creates the DNS records and the HTTPS certificate itself, so there is nothing to add by hand under DNS.
 
-1. **GitHub:** repository **Settings → Pages → Custom domain** is `talosaur.com`, with **Enforce HTTPS** ticked. (With the GitHub Actions deploy, no `CNAME` file is needed in the repository; GitHub ignores it.)
-2. **Cloudflare DNS** (Cloudflare dashboard → talosaur.com → DNS → Records), all set to **DNS only** (grey cloud), so GitHub can issue the HTTPS certificate:
+`astro.config.mjs`: `site` is `'https://talosaur.com'` and there is no `base`, because on its own domain the site sits at the root (`/news`, not `/t-s/news`).
 
-   | Type | Name | Content |
-   |---|---|---|
-   | A | `@` | `185.199.108.153` |
-   | A | `@` | `185.199.109.153` |
-   | A | `@` | `185.199.110.153` |
-   | A | `@` | `185.199.111.153` |
-   | AAAA | `@` | `2606:50c0:8000::153` |
-   | AAAA | `@` | `2606:50c0:8001::153` |
-   | AAAA | `@` | `2606:50c0:8002::153` |
-   | AAAA | `@` | `2606:50c0:8003::153` |
-   | CNAME | `www` | `tafreshio.github.io` |
+Internal links and image paths are written as plain addresses (`'/news'` in `src/data/site.ts`) and passed through `url()` from `src/lib/url.ts`. **If you add a new link or image in a page or component, wrap it in `url()`**: today it changes nothing, but if the site ever moves into a folder, only `astro.config.mjs` needs editing. Outside links (`https://...`) and email links don't need it.
 
-   These come from GitHub's guide, [Managing a custom domain for your GitHub Pages site](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site).
-3. **`astro.config.mjs`:** `site` is `'https://talosaur.com'` and there is no `base`, because on its own domain the site sits at the root (`/news`, not `/talosaur-site/news`).
-
-Internal links and image paths are written as plain addresses (`'/news'` in `src/data/site.ts`) and passed through `url()` from `src/lib/url.ts`. **If you add a new link or image in a page or component, wrap it in `url()`**: today it changes nothing, but if the site ever moves into a folder again, only `astro.config.mjs` needs editing. Outside links (`https://...`) and email links don't need it.
+**History:** until November 2026 the site was built by GitHub Actions and hosted on GitHub Pages from `tafreshio/talosaur-site`.
 
 ## Search engines (showing up on Google)
 
