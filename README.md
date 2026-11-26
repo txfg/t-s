@@ -81,6 +81,11 @@ Every **Apply** button on the site goes to the Apply page (`/apply`, made by `sr
 - **Where applications go:** the **Talosaur Applications** base in Airtable, table **Applications**. Each application is one row, with the time it came in (**Submitted**).
 - **Reviewing:** use the **Status** column (New, Reviewing, Interview, Accepted, Not a fit) and **Team notes**. Neither is on the form, so applicants never see them. To get an email for each new application, in Airtable open **Automations**, choose the trigger "When a form is submitted" and the action "Send email".
 - **Changing the questions:** edit the form in Airtable (open the base, then **Interfaces**/**Forms**, "Apply to Talosaur"), then press **Publish**. Nothing on the website needs to change. To add a whole new question, add a field to the Applications table first, then add it to the form.
+- **Show/hide rules** (set in Airtable's form builder, they can't be set any other way): click a question, then **Conditions** ("Only show this field if..."). The form uses these:
+  - **Who told you about us?** shows only if *How did you hear about us?* is "A friend or team member".
+  - **Where did you hear about us?** shows only if *How did you hear about us?* is "Other".
+  - **Position 2: title** and **what you did** show only if *Position 1: title* is not empty; **Position 3** the same, based on *Position 2: title*. This is how "add another position" works.
+  Press **Publish** after changing them.
 - **The form's address** is in `airtableForm` in `src/data/positions.ts` (two IDs copied from the form's link). Only change it if you build a brand new form.
 - **Privacy:** the Privacy page says applications are stored by Airtable. Update it if that ever changes.
 
