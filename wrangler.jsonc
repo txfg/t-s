@@ -13,5 +13,8 @@
     "directory": "./dist",
     // Unknown addresses show the site's own 404 page (src/pages/404.astro).
     "not_found_handling": "404-page"
-  }
+  },
+  // Lets Cloudflare build a preview copy of the site for each pull request
+  // (its `npx wrangler preview` step needs this block, even empty).
+  "previews": {}
 }
