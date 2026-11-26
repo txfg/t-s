@@ -42,7 +42,7 @@ export const featuredCards = [
     href: '/who-we-are',
     photo: 'home-team.jpg',
     standIn: 'the whole team',
-    photoLabel: 'The team',
+    photoLabel: 'Four members of the team smiling around a restaurant table',
   },
   {
     title: 'Open positions',

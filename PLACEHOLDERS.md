@@ -8,7 +8,6 @@ section explains sizes.
 | Placeholder | Where it shows | File to edit |
 |---|---|---|
 | Instagram and YouTube links | Footer, "Connect with us" (plain text until filled in) | `src/data/site.ts` (`socialLinks`) |
-| `[Major, year]` (all 7 people) | Who we are | `src/data/team.ts` |
 | Team LinkedIn links (optional, hidden until filled in) | Who we are | `src/data/team.ts` (`linkedin`) |
 | `[Photographer and source for these four photos.]` (zoanthids, porcelain crab, soft coral, pygmy seahorse headers) | Image credits page | `src/pages/image-credits.astro` |
 | `[photographer and source]` for the brain coral photo (The Problem, Habitat) | Image credits page | `src/pages/image-credits.astro` |
@@ -21,12 +20,10 @@ section explains sizes.
 
 | Photo | Where it shows | Save as (in `public/images/`) | Shape |
 |---|---|---|---|
-| The whole team | Home, Featured "Who we are" card | `home-team.jpg` | 16:9 |
 | Team members at work | Home, Featured "Open positions" card | `home-positions.jpg` | 16:9 |
 | A team portrait | Home, "Meet the team" card | `home-meet-the-team.jpg` | 16:9 |
 | Nice to have: a retake of Fernando's portrait (the lead photo, now a selfie) against a plain wall, and larger originals of Sam's, Alvin's, Nicholas's and Omeed's (they came in at 800 px) | Who we are | `team/fernando-guzman.jpg` and the others' names in `src/data/team.ts` | Fernando 4:5 |
 | A pool test, Lake Bryan, Lake Travis, Galveston (the Offshore stop has a NOAA reef photo) | News, "Where we test" (small photo beside each stop) | `sections/test-pool.jpg`, `test-lake-bryan.jpg`, `test-lake-travis.jpg`, `test-galveston.jpg` | 4:3 |
-| The team at a build day | Positions, "Life on the team" | `sections/team-build.jpg` | 16:10 |
 | Hands on a part (optional: adds the small framed photo) | Positions, "Life on the team" | `sections/team-lab.jpg` | 1:1 |
 | Turtle in the pool | Donate, "Where it goes" Testing card | `sections/support-testing.jpg` | 4:3 |
 | Turtle on the bench, Turtle in the pool or a lake, and the Galveston trip (each replaces a stock stand-in: a mill, sunlit water, a boat wake) | News, "Where we are" pill | `sections/phase-build.jpg`, `phase-test.jpg`, `phase-field.jpg` | 4:3, subject in the middle |
@@ -48,6 +45,9 @@ section explains sizes.
 - **The jellyfish photo** (The Problem, page header, `public/images/pages/the-problem.jpg`, colour-shifted by `stills_site/make_problem_jelly.py`). Supplied by the team; note where it came from and who took it so it can be credited, and check it may be used and edited.
 - **The brain coral photo** (The Problem, Habitat, `public/images/sections/habitat-pano.jpg`). Supplied by the team; note where it came from and who took it so it can be credited. If it is NOAA's photo pl23_sanc2433 (Emma Hickerson, Flower Garden Banks National Marine Sanctuary) it is public domain.
 - **The reef panorama** (Home, "Why it matters", `public/images/sections/why-reef-pano.jpg`). © The Ocean Agency (Christophe Bailhache, XL Catlin Seaview Survey). Their licence allows non-commercial use with credit and no edits. The file is only resized (its credit stamp is still in the file; the layout crops it out of view and the credit is shown in text on the photo and on Image credits). Before launch, confirm Talosaur's use counts as non-commercial, or ask The Ocean Agency for permission.
+- **The Apply page and the Airtable form (November 2026).** The Apply page text ("Apply to Talosaur", "Pick a role, fill in one short form...", "About 5 minutes · We read every application") and the form's questions, help text and intro in Airtable were written for the site. Check they match how the team recruits; "we read every application" and "we reply to every application" are promises. Edit the page in `src/pages/apply.astro` and the form in Airtable (see "Applications (Airtable)" in the README). The old Google Form is no longer linked from the site; close it in Google Forms so nobody applies there by mistake.
+- **Form show/hide rules to set in Airtable (one-time).** Until they are added in the form builder, "Who told you about us?", "Where did you hear about us?" and Positions 2 and 3 always show (all optional). The steps are under "Applications (Airtable)" in the README. Also in Airtable: the old "Relevant experience" column is no longer on the form and can be deleted.
+- **The fish photo behind "Why naming a species matters"** (The Problem, Section 01, `public/images/sections/naming-fish.webp`). Supplied by the team and flipped left to right so the fish sits in the open space under the intro. Note where it came from and who took it so it can be credited on Image credits, and check it may be used (and flipped).
 - **The two fish photos** (Home "Why it matters" lanternfish, `public/images/sections/why-lanternfish.jpg`; News "Where we are", `public/images/sections/phase-fish.jpg`). Supplied by the team; note where they came from and who took them so Image credits can name them (if they are NOAA photos, they are public domain). Also check the lanternfish caption ("Lanternfish") is right.
 - **Ocean Image Bank photos** (the animals in The Problem depth graphic): free for non-commercial use with credit to the photographer and Ocean Image Bank. Check that the site counts as non-commercial (it has a Donate page, but no payments). Credits are on the Image credits page.
 - **Sources on The Problem page.** Every number and fact now links to a source (the `sources` list at the top of `src/data/problem.ts`). Give them a read before launch. The closest match for the robot cost range is Deep Trekker's ROV buying guide (inspection ROVs $15,000 to $300,000, work-class ROVs $250,000 up to millions); swap in the team's own source if the $50,000 figure came from somewhere specific.

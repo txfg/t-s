@@ -25,7 +25,7 @@ export const team: TeamMember[] = [
   {
     name: 'Fernando Guzman',
     role: 'Founder',
-    majorYear: '[Major, year]', // PLACEHOLDER
+    majorYear: 'Mechanical Engineering, 2029',
     photo: 'fernando-guzman.jpg',
     linkedin: '', // PLACEHOLDER: LinkedIn URL (optional)
     lead: true,
@@ -35,42 +35,42 @@ export const team: TeamMember[] = [
   {
     name: 'Sam Cakici',
     role: 'Lead Mechanical Engineer',
-    majorYear: '[Major, year]', // PLACEHOLDER
+    majorYear: 'Mechanical Engineering, 2029',
     photo: 'sam-cakici.jpg',
     linkedin: '', // PLACEHOLDER: LinkedIn URL (optional)
   },
   {
     name: 'Kabir Muzumdar',
     role: 'Hydraulics Engineer',
-    majorYear: '[Major, year]', // PLACEHOLDER
+    majorYear: 'Mechanical Engineering, 2028',
     photo: 'kabir-muzumdar.jpg',
     linkedin: '', // PLACEHOLDER: LinkedIn URL (optional)
   },
   {
     name: 'Nicholas Khu',
     role: 'Electrical Engineer',
-    majorYear: '[Major, year]', // PLACEHOLDER
+    majorYear: 'Electrical Engineering, 2029',
     photo: 'nicholas-khu.jpg',
     linkedin: '', // PLACEHOLDER: LinkedIn URL (optional)
   },
   {
     name: 'Omeed Tafreshi',
     role: 'Software Engineer',
-    majorYear: '[Major, year]', // PLACEHOLDER
+    majorYear: 'Computer Science, 2029',
     photo: 'omeed-tafreshi.jpg',
     linkedin: '', // PLACEHOLDER: LinkedIn URL (optional)
   },
   {
     name: 'Dominick Chu',
     role: 'Ocean Engineer',
-    majorYear: '[Major, year]', // PLACEHOLDER
+    majorYear: 'Ocean Engineering, 2029',
     photo: 'dominick-chu.jpg',
     linkedin: '', // PLACEHOLDER: LinkedIn URL (optional)
   },
   {
     name: 'Alvin Zheng',
     role: 'Mechanical Engineer',
-    majorYear: '[Major, year]', // PLACEHOLDER
+    majorYear: 'Mechanical Engineering, 2029',
     photo: 'alvin-zheng.jpg',
     linkedin: '', // PLACEHOLDER: LinkedIn URL (optional)
   },

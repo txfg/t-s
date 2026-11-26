@@ -6,9 +6,52 @@ export const positionsHeadline = 'Help us explore the twilight zone';
 export const positionsIntro =
   "We're looking for motivated students who want to build something real. No ocean experience needed.";
 
-// The Google Form the "Apply now" button opens
-export const applicationFormUrl =
-  'https://docs.google.com/forms/d/e/1FAIpQLSeqdfpwJna-HFkx8cruwIPdnk9MsNprZIsnHh6OidtGsZZL4w/viewform';
+// ---------------------------------------------------------------- Applications (Airtable)
+// Applications go to the "Talosaur Applications" base in Airtable (table: Applications). The form
+// lives in Airtable and is shown inside the Apply page (/apply) on this site.
+// To change the questions, edit the form in Airtable; nothing here needs to change.
+// If you ever make a new form, paste its two IDs from its address here:
+//   https://airtable.com/appeAulkTEyW03SIt/pagqKMsrYv13r4iei/form
+//                        ^ base               ^ form page
+export const airtableForm = {
+  base: 'appeAulkTEyW03SIt',
+  page: 'pagqKMsrYv13r4iei',
+};
+
+// The role names on the site and the "Role" choices in Airtable must match exactly, so an Apply button
+// can pick the role for the applicant. When you add or rename a role below, add or rename the same
+// choice in the Role field in Airtable. (No-break spaces in titles are turned into plain spaces.)
+const plainTitle = (title: string) => title.replace(/\u00a0/g, ' ');
+
+// The form's own address (opens Airtable directly), optionally with the role already picked
+export function applicationFormUrl(role?: string): string {
+  const base = `https://airtable.com/${airtableForm.base}/${airtableForm.page}/form`;
+  return role ? `${base}?prefill_Role=${encodeURIComponent(plainTitle(role))}` : base;
+}
+
+// The same form, in the version made to sit inside a page (used on /apply)
+export function applicationEmbedUrl(role?: string): string {
+  const base = `https://airtable.com/embed/${airtableForm.base}/${airtableForm.page}/form`;
+  return role ? `${base}?prefill_Role=${encodeURIComponent(plainTitle(role))}` : base;
+}
+
+// Where the site's Apply buttons go: the Apply page, with the role picked if there is one.
+// Pass it through url() (src/lib/url.ts) when putting it in a page.
+export function applyPath(role?: string): string {
+  return role ? `/apply?role=${encodeURIComponent(plainTitle(role))}` : '/apply';
+}
+
+// "Not sure yet" is offered on the Apply page as well as the roles below
+export const notSureRole = 'Not sure yet';
+
+// How joining works: the four steps on the Positions page, also shown beside the form on /apply.
+// New copy (not from the Content doc): check it matches how the team really recruits, and edit freely.
+export const joinSteps = [
+  { title: 'Apply', text: 'Fill in the short application form. No ocean experience needed.' },
+  { title: 'Hear back', text: 'We read every application and reply by email to set up a quick chat.' },
+  { title: 'Meet the crew', text: 'Talk about what you would like to build, and see where Turtle is up to.' },
+  { title: 'Start building', text: 'Pick up a first task with the people in your area and join the next build day.' },
+];
 
 export const positions = [
   {

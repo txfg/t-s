@@ -1,0 +1,383 @@
+---
+// Apply: the application form, on our own page. The form itself lives in Airtable
+// ("Talosaur Applications" base) and is shown here in an <iframe>, a window onto another website.
+// Every Apply button on the site comes here; a role-specific one adds ?role=... to the address,
+// and the little script at the bottom passes that role to Airtable so it is already picked.
+// Roles, the form's IDs and the "what happens next" steps are in src/data/positions.ts.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { url } from '../lib/url';
+import { teamEmail, contactHref } from '../data/site';
+import {
+  positions,
+  joinSteps,
+  notSureRole,
+  applyPath,
+  applicationFormUrl,
+  applicationEmbedUrl,
+} from '../data/positions';
+
+// The roles to choose from: every open role, then "Not sure yet". Plain spaces, to match Airtable.
+const roles = [...positions.map((role) => role.title.replace(/ /g, ' ')), notSureRole];
+const emailHref = contactHref(teamEmail);
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<BaseLayout title="Apply" description="Apply to join Talosaur, a student team exploring the ocean's twilight zone. One short form, no ocean experience needed.">
+  <PageHeader
+    title="Apply"
+    heading="Apply to Talosaur"
+    href="/positions"
+    intro="Pick a role, fill in one short form and we'll reply by email. No ocean experience needed."
+    caption="About 5 minutes · We read every application"
+  />
+
+  <div class="band band--top theme-light">
+    <section class="container apply">
+      <div class="apply-grid">
+        <!-- Left: choose a role, then what happens after you apply -->
+        <aside class="apply-side">
+          <div class="apply-pick">
+            <h2 class="label apply-side-title">[ Choose a role ]</h2>
+            <ul class="apply-roles" data-apply-roles>
+              {roles.map((role, i) => (
+                <li>
+                  <a class="apply-role" href={url(applyPath(role))} data-role={role}>
+                    <span class="label apply-role-num" aria-hidden="true">{role === notSureRole ? '··' : pad(i + 1)}</span>
+                    <span class="apply-role-name">{role}</span>
+                    <span class="apply-role-mark" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p class="apply-roles-note">
+              Read what each role involves on <a href={url('/positions')}>Positions</a>.
+            </p>
+          </div>
+
+          <div class="apply-after">
+            <h2 class="label apply-side-title">[ What happens next ]</h2>
+            <ol class="apply-next">
+              {joinSteps.slice(1).map((step, i) => (
+                <li>
+                  <span class="label apply-next-num" aria-hidden="true">{pad(i + 2)}</span>
+                  <div>
+                    <h3 class="apply-next-title">{step.title}</h3>
+                    <p class="apply-next-text">{step.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <p class="apply-help">
+              Questions before you apply? Email{' '}
+              {emailHref ? <a href={emailHref}>{teamEmail}</a> : <span class="placeholder">{teamEmail}</span>}.
+            </p>
+          </div>
+        </aside>
+
+        <!-- Right: the Airtable form in a panel -->
+        <div class="apply-form">
+          <div class="apply-form-bar">
+            <span class="label">Application form</span>
+            <span class="label apply-form-role" data-apply-current>Any role</span>
+          </div>
+          <div class="apply-frame-wrap">
+            <!-- The script below sets the form's address (with the chosen role) before it loads.
+                 Without JavaScript, the <noscript> copy loads the plain form instead. -->
+            <iframe
+              class="apply-frame"
+              title="Talosaur application form"
+              data-apply-frame
+              data-embed={applicationEmbedUrl()}
+              data-form={applicationFormUrl()}
+            ></iframe>
+            <noscript>
+              <iframe class="apply-frame" title="Talosaur application form" src={applicationEmbedUrl()}></iframe>
+            </noscript>
+          </div>
+          <p class="apply-fallback">
+            Form not loading?{' '}
+            <a href={applicationFormUrl()} target="_blank" rel="noopener noreferrer" data-apply-direct>
+              Open it on Airtable <span aria-hidden="true">↗</span>
+              <span class="visually-hidden">(opens in a new tab)</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<!-- is:inline: runs right here as the page loads (not bundled), so the form starts loading at once
+     with the right role. -->
+<script is:inline>
+  (function () {
+    var frame = document.querySelector('[data-apply-frame]');
+    if (!frame) return;
+    var links = Array.prototype.slice.call(document.querySelectorAll('[data-apply-roles] [data-role]'));
+    var current = document.querySelector('[data-apply-current]');
+    var direct = document.querySelector('[data-apply-direct]');
+    var known = links.map(function (a) { return a.getAttribute('data-role'); });
+
+    function withRole(base, role) {
+      return role ? base + '?prefill_Role=' + encodeURIComponent(role) : base;
+    }
+
+    function choose(role) {
+      if (known.indexOf(role) === -1) role = '';
+      frame.src = withRole(frame.getAttribute('data-embed'), role);
+      if (direct) direct.href = withRole(frame.getAttribute('data-form'), role);
+      if (current) current.textContent = role || 'Any role';
+      links.forEach(function (a) {
+        if (a.getAttribute('data-role') === role) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
+    }
+
+    choose(new URLSearchParams(window.location.search).get('role') || '');
+
+    // Picking a role swaps the form in place (no page reload) and updates the address,
+    // so the link can be shared or bookmarked.
+    links.forEach(function (a) {
+      a.addEventListener('click', function (event) {
+        event.preventDefault();
+        var role = a.getAttribute('data-role');
+        choose(role);
+        history.replaceState(null, '', a.getAttribute('href'));
+        if (window.matchMedia('(max-width: 1023px)').matches) {
+          frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  })();
+</script>
+
+<style>
+  .apply {
+    padding-bottom: var(--space-2xl);
+  }
+
+  .apply-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  /* ---------- Left column ---------- */
+
+  /* stays in view while the form scrolls past it */
+  .apply-side {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .apply-side-title {
+    margin: 0 0 var(--space-sm);
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .apply-side-title + * {
+    margin-top: 0;
+  }
+
+  .apply-roles {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .apply-role {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--space-xs);
+    padding: 0.8rem 0.75rem 0.8rem 0.5rem;
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: background-color 200ms var(--ease), color 200ms var(--ease);
+  }
+
+  .apply-role:hover {
+    background: var(--color-surface);
+  }
+
+  .apply-role-num {
+    color: var(--color-muted);
+  }
+
+  .apply-role-name {
+    font-family: var(--font-display);
+    font-stretch: var(--display-width);
+    font-weight: 800;
+    font-size: 1.15rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    word-spacing: 0.1em;
+  }
+
+  .apply-role-mark {
+    color: var(--color-accent);
+    opacity: 0;
+    transform: translateX(-0.4rem);
+    transition: opacity 200ms var(--ease), transform 200ms var(--ease);
+  }
+
+  .apply-role:hover .apply-role-mark {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* the chosen role: a dark row with a lime number, like a selected readout */
+  .apply-role[aria-current] {
+    background: var(--light-text);
+    color: var(--light-bg);
+  }
+
+  .apply-role[aria-current] .apply-role-num {
+    color: var(--color-lime);
+  }
+
+  .apply-role[aria-current] .apply-role-mark {
+    opacity: 1;
+    transform: none;
+    color: var(--color-lime);
+  }
+
+  .apply-roles-note {
+    margin: var(--space-sm) 0 var(--space-xl);
+    font-size: 0.95rem;
+    color: var(--color-muted);
+  }
+
+  .apply-next {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .apply-next li {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: var(--space-xs);
+    padding-block: 0.75rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .apply-next-num {
+    padding-top: 0.15rem;
+    color: var(--color-orange);
+  }
+
+  .apply-next-title {
+    margin: 0;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .apply-next-text {
+    margin: 0.2rem 0 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .apply-help {
+    margin: var(--space-lg) 0 0;
+    font-size: 0.95rem;
+  }
+
+  /* ---------- Right column: the form panel ---------- */
+
+  .apply-form-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding: 0.75rem 1rem;
+    background: var(--light-text);
+    color: var(--light-bg);
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .apply-form-bar .label {
+    color: rgb(238 243 242 / 0.75);
+  }
+
+  .apply-form-bar .apply-form-role {
+    color: var(--color-lime);
+    text-align: right;
+  }
+
+  .apply-frame-wrap {
+    border: 1px solid var(--color-line);
+    border-top: 0;
+    background: #ffffff;
+  }
+
+  /* Airtable's form scrolls inside its own window; tall enough that most people never notice */
+  .apply-frame {
+    display: block;
+    width: 100%;
+    height: 1500px;
+    border: 0;
+    background: #ffffff;
+  }
+
+  .apply-fallback {
+    margin: var(--space-sm) 0 0;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+
+  /* ---------- Tablets and phones: one column, roles first ---------- */
+
+  @media (max-width: 1023px) {
+    .apply-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-lg);
+    }
+
+    /* the left column splits around the form: roles, then the form, then what happens next */
+    .apply-side {
+      position: static;
+      display: contents;
+    }
+
+    .apply-pick {
+      order: 0;
+    }
+
+    .apply-form {
+      order: 1;
+    }
+
+    .apply-after {
+      order: 2;
+    }
+
+    .apply-roles-note {
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .apply-frame {
+      height: 1800px;
+    }
+
+    .apply-role {
+      padding-block: 0.7rem;
+    }
+
+    .apply-role-name {
+      font-size: 1.05rem;
+    }
+  }
+</style>
