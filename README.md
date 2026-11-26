@@ -208,6 +208,14 @@ These sections sit inside the light bands (or, for At a glance, in the dark wate
 
 Other files in `public/images/`: `hero-poster.jpg` (the still behind the Home video) and `og-image.jpg` (the preview image when a link to the site is shared: the logo over a jellyfish, 1200 × 630).
 
+
+**The team collage** (Home, "Meet the team" card, `public/images/home-meet-the-team.jpg`) is made from the headshots in `public/images/team/`. After adding, removing or swapping a headshot, rebuild it:
+
+```bash
+npm run team-collage
+```
+
+The grid order, the dark squares and how each photo is cropped are the `tiles` list at the top of `scripts/make-team-collage.mjs`. To add someone, swap one of the `null` (dark) squares for a line like the others. Check the result by opening the image, and nudge that person's `x`, `y` (where their face is) or `h` (zoom) if the crop is off.
 ## Colour, type and marks (October 2026)
 
 The rules for anything new are in `claude/talosaur-site-design-system.md` in the team's media project. In short:

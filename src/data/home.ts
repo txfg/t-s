@@ -81,9 +81,9 @@ export const interestedCards = [
     title: 'Meet the team',
     text: 'The people behind Talosaur.',
     href: '/who-we-are',
-    photo: 'home-meet-the-team.jpg',
+    photo: 'home-meet-the-team.jpg', // a grid of the team's headshots, made by `npm run team-collage`
     standIn: 'a team portrait',
-    photoLabel: 'Team portrait',
+    photoLabel: 'A grid of headshots of the seven Talosaur team members',
   },
   {
     title: 'Get in touch',
