@@ -8,7 +8,6 @@ section explains sizes.
 | Placeholder | Where it shows | File to edit |
 |---|---|---|
 | Instagram and YouTube links | Footer, "Connect with us" (plain text until filled in) | `src/data/site.ts` (`socialLinks`) |
-| `[Major, year]` (all 7 people) | Who we are | `src/data/team.ts` |
 | Team LinkedIn links (optional, hidden until filled in) | Who we are | `src/data/team.ts` (`linkedin`) |
 | `[Photographer and source for these four photos.]` (zoanthids, porcelain crab, soft coral, pygmy seahorse headers) | Image credits page | `src/pages/image-credits.astro` |
 | `[photographer and source]` for the brain coral photo (The Problem, Habitat) | Image credits page | `src/pages/image-credits.astro` |
