@@ -89,7 +89,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
         </div>
       </div>
 
-      <div class="naming">
+      <!-- background photo: public/images/sections/naming-fish.webp (swap the file to change it) -->
+      <div class="naming" style={`--naming-bg: url('${imageUrl('sections/naming-fish.webp')}')`}>
         <div class="naming-head" data-reveal>
           <h3 class="naming-title">{naming.title}</h3>
           <p class="naming-intro">{naming.intro}</p>
@@ -427,7 +428,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
     margin-top: var(--space-xl);
     padding: clamp(1.75rem, 4vw, 4rem);
     color: var(--light-bg);
-    background: radial-gradient(120% 140% at 15% 0%, #13324a, #0b1620 60%);
+    /* the fish photo (flipped so the fish sits in the empty space under the intro), under a dark
+       wash so the white text stays readable: lightest around the fish, darker behind the text */
+    background:
+      radial-gradient(45% 55% at 33% 78%, rgb(7 20 30 / 0.15), rgb(7 20 30 / 0.82) 100%),
+      linear-gradient(90deg, rgb(7 20 30 / 0) 40%, rgb(7 20 30 / 0.35) 60%),
+      var(--naming-bg) 50% 0% / cover no-repeat,
+      #0b1620;
     /* inside the panel, lines and labels switch to their versions for dark */
     --color-line: rgb(232 241 245 / 0.2);
     --color-accent: #3de0d0;
@@ -654,8 +661,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
       display: none;
     }
 
+    /* one column of text over the whole photo: an even, darker wash keeps every line readable */
     .naming {
       grid-template-columns: 1fr;
+      background:
+        linear-gradient(rgb(7 20 30 / 0.8), rgb(7 20 30 / 0.8)),
+        var(--naming-bg) 32% 50% / cover no-repeat,
+        #0b1620;
     }
 
     .stats {
