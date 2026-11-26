@@ -1,5 +1,6 @@
 ---
-// Positions: open roles plus one "Apply now" button that opens the Google Form. Roles are listed in src/data/positions.ts.
+// Positions: open roles, each with an Apply button that opens the Apply page (/apply) with that role picked.
+// Roles are listed in src/data/positions.ts.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import PhotoBand from '../components/PhotoBand.astro';
@@ -9,21 +10,14 @@ import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import Steps from '../components/Steps.astro';
 import { url } from '../lib/url';
 import { imageExists, imageUrl } from '../lib/images';
-import { positions, positionsHeadline, positionsIntro, applicationFormUrl } from '../data/positions';
+import { positions, positionsHeadline, positionsIntro, applyPath, joinSteps } from '../data/positions';
 
 // Life on the team (written from the Content doc and the site: where we build, the live stream, the test
 // route on the News page, the general inquiries address).
 // Photos: public/images/sections/team-build.jpg (the team at a build day) and team-lab.jpg (hands on a
 // part, the small photo in the orange frame). Until team-build.jpg exists, a "photo to come" panel shows
 // what it should be; the small photo only appears once team-lab.jpg is added.
-// How joining works (Section 01). New copy (not from the Content doc): check it matches how the team
-// really recruits, and edit freely.
-const joinSteps = [
-  { title: 'Apply', text: 'Fill in the short application form. No ocean experience needed.' },
-  { title: 'Hear back', text: 'We read every application and reply by email to set up a quick chat.' },
-  { title: 'Meet the crew', text: 'Talk about what you would like to build, and see where Turtle is up to.' },
-  { title: 'Start building', text: 'Pick up a first task with the people in your area and join the next build day.' },
-];
+// How joining works (Section 01): the steps are joinSteps in src/data/positions.ts (also used on /apply).
 
 const life = {
   lead: 'Most of us build in College Station. A build day is hands-on: designing parts, making them and putting the vehicle together, and you can watch some of it live on our Twitch stream. Testing starts in the pool, then moves to Lake Bryan, Lake Travis and the Gulf coast.',
@@ -33,9 +27,8 @@ const life = {
 
 <BaseLayout title="Positions" description={positionsIntro} headerOverlay>
   <PageHeader title="Positions" heading={positionsHeadline} href="/positions" intro={positionsIntro} caption="Now recruiting" image="positions.jpg" imagePosition="58% 45%">
-    <a class="button" href={applicationFormUrl} target="_blank" rel="noopener noreferrer">
+    <a class="button" href={url(applyPath())}>
       Apply now <span aria-hidden="true">→</span>
-      <span class="visually-hidden">(opens the application form in a new tab)</span>
     </a>
   </PageHeader>
 
@@ -57,9 +50,9 @@ const life = {
                 <dd>{role.skills}</dd>
               </div>
             </dl>
-            <a class="label role-apply" href={applicationFormUrl} target="_blank" rel="noopener noreferrer">
+            <a class="label role-apply" href={url(applyPath(role.title))}>
               Apply <span aria-hidden="true">→</span>
-              <span class="visually-hidden">for {role.title} (opens the application form in a new tab)</span>
+              <span class="visually-hidden">for {role.title}</span>
             </a>
           </li>
         ))}
@@ -78,9 +71,8 @@ const life = {
     title={`${String(positions.length).padStart(2, '0')} open roles`}
     items={positions.map((role) => ({ title: role.title }))}
   >
-    <a class="button" href={applicationFormUrl} target="_blank" rel="noopener noreferrer">
+    <a class="button" href={url(applyPath())}>
       Apply now <span aria-hidden="true">→</span>
-      <span class="visually-hidden">(opens the application form in a new tab)</span>
     </a>
   </StoryBand>
 
@@ -91,9 +83,8 @@ const life = {
       <SectionHeader number={1} title="How joining works" />
       <Steps steps={joinSteps} />
       <p class="join-cta">
-        <a class="button" href={applicationFormUrl} target="_blank" rel="noopener noreferrer">
+        <a class="button" href={url(applyPath())}>
           Start with step 01 <span aria-hidden="true">→</span>
-          <span class="visually-hidden">(opens the application form in a new tab)</span>
         </a>
       </p>
     </section>
@@ -106,9 +97,8 @@ const life = {
         <div class="life-copy" data-reveal>
           <p class="life-lead">{life.lead}</p>
           <p class="life-text">{life.text}</p>
-          <a class="button" href={applicationFormUrl} target="_blank" rel="noopener noreferrer">
+          <a class="button" href={url(applyPath())}>
             Apply now <span aria-hidden="true">→</span>
-            <span class="visually-hidden">(opens the application form in a new tab)</span>
           </a>
         </div>
         <figure class="life-collage" aria-hidden="true" data-drift="60">

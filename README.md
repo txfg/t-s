@@ -70,7 +70,19 @@ The "What we share" text at the bottom of the crew (a few lines about the team a
 
 ## Edit open positions
 
-Open `src/data/positions.ts`. Each role is one `{ ... }` block with a title, "What you'd do" and "Helpful skills". Copy a block to add a role, delete it to close one. The **Apply now** button at the top of the page opens the Google Form saved in `applicationFormUrl`; change that line if the form ever moves. If you add or rename a role, also update the "Position applying for" dropdown in the Google Form so they match.
+Open `src/data/positions.ts`. Each role is one `{ ... }` block with a title, "What you'd do" and "Helpful skills". Copy a block to add a role, delete it to close one.
+
+**If you add or rename a role, also add or rename it in Airtable** (the **Role** field in the Applications table, see below), spelled exactly the same. That is what lets each role's **Apply** button pick the role in the form for the applicant. A role missing from Airtable still works; the applicant just picks it themselves.
+
+## Applications (Airtable)
+
+Every **Apply** button on the site goes to the Apply page (`/apply`, made by `src/pages/apply.astro`). It shows the list of roles on the left and the application form on the right. The form lives in Airtable and is shown inside the page in an *iframe* (a window onto another website). A role's own Apply button opens `/apply?role=...`, and the page passes that role to Airtable so it is already selected. Clicking a role on the Apply page does the same without reloading.
+
+- **Where applications go:** the **Talosaur Applications** base in Airtable, table **Applications**. Each application is one row, with the time it came in (**Submitted**).
+- **Reviewing:** use the **Status** column (New, Reviewing, Interview, Accepted, Not a fit) and **Team notes**. Neither is on the form, so applicants never see them. To get an email for each new application, in Airtable open **Automations**, choose the trigger "When a form is submitted" and the action "Send email".
+- **Changing the questions:** edit the form in Airtable (open the base, then **Interfaces**/**Forms**, "Apply to Talosaur"), then press **Publish**. Nothing on the website needs to change. To add a whole new question, add a field to the Applications table first, then add it to the form.
+- **The form's address** is in `airtableForm` in `src/data/positions.ts` (two IDs copied from the form's link). Only change it if you build a brand new form.
+- **Privacy:** the Privacy page says applications are stored by Airtable. Update it if that ever changes.
 
 ## Add or swap a photo
 
