@@ -50,7 +50,7 @@ export const featuredCards = [
     href: '/positions',
     photo: 'home-positions.jpg',
     standIn: 'team members at work',
-    photoLabel: 'Team members at work',
+    photoLabel: 'Illustration of a person reaching for a large application card with a profile photo on it',
   },
   {
     title: 'Our build log',
